@@ -17,6 +17,10 @@ apt_package "sudo" do
   action :install
 end
 
+apt_package "libaio1" do
+  action :install
+end
+
 # get files
 bash "put_files" do
   code <<-EOH
@@ -45,6 +49,11 @@ end
 template "#{jboss_home}/#{jboss_path}/standalone/configuration/standalone-full-ha.xml" do
   source 'standalone-full-ha.xml.erb'
   owner jboss_user
+  variables({
+     :s3_access_key => node[:aws][:s3][:access_key],
+     :s3_secret_access_key => node[:aws][:s3][:secret_access_key],
+     :s3_bucket => node[:aws][:s3][:bucket]
+  })
 end
 
 template "#{jboss_home}/#{jboss_path}/welcome-content/status.txt" do

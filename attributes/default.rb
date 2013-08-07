@@ -15,3 +15,7 @@ default['jboss']['application'] = 'jboss'
 default['jboss']['config'] = 'standalone'
 default['jboss']['script'] = 'standalone.sh'
 default['jboss']['manage_config_file'] = true
+default['aws']['s3']['access_key'] = ""
+default['aws']['s3']['secret_access_key'] = ""
+default['aws']['s3']['bucket'] = ""
+
