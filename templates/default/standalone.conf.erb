@@ -52,7 +52,6 @@ if [ "x$JAVA_OPTS" = "x" ]; then
    JAVA_OPTS="$JAVA_OPTS -Djboss.server.default.config=standalone-full-ha.xml"
    JAVA_OPTS="$JAVA_OPTS -Djboss.bind.address=0.0.0.0"
    JAVA_OPTS="$JAVA_OPTS -Djboss.bind.address.management=127.0.0.1 -Djboss.management.native.port=9999"
-   JAVA_OPTS="$JAVA_OPTS -Djboss.node.name=<%= node[:fqdn] %>"
 else
    echo "JAVA_OPTS already set in environment; overriding default settings with values: $JAVA_OPTS"
 fi
