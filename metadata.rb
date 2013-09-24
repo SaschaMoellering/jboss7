@@ -1,7 +1,7 @@
 maintainer       "Sascha Moellering"
 maintainer_email "sascha.moellering@gmail.com"
 license          "Apache v2.0"
-description      "Installs/Configures Wildfly 8"
+description      "Installs/Configures JBoss 7.1"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
 version          "0.0.1"
 
