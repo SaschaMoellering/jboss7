@@ -27,17 +27,17 @@ export PATH=$PATH:$JAVAPTH
 case "$1" in
     start)
         echo "Starting JBoss AS 7.1.1"
-        sudo -u jboss sh ${JBOSS_HOME}/bin/standalone.sh 2>&1 &
+        sudo su - jboss -c "sh ${JBOSS_HOME}/bin/standalone.sh 2>&1" &
     ;;
     stop)
         echo "Stopping JBoss AS 7.1.1"
-        sudo -u jboss sh ${JBOSS_HOME}/bin/jboss-cli.sh --connect command=:shutdown 2>&1 &
+        sudo su - jboss -c "sh ${JBOSS_HOME}/bin/jboss-cli.sh --connect command=:shutdown 2>&1" &
     ;;
     restart)
         echo "Stopping JBoss AS 7.1.1"
-        sudo -u jboss sh ${JBOSS_HOME}/bin/jboss-cli.sh --connect command=:shutdown 2>&1 &
+        sudo su - jboss -c "sh ${JBOSS_HOME}/bin/jboss-cli.sh --connect command=:shutdown 2>&1" &
         echo "Starting JBoss AS 7.1.1"
-        sudo -u jboss sh ${JBOSS_HOME}/bin/standalone.sh 2>&1 &
+        sudo su - jboss -c "sh ${JBOSS_HOME}/bin/standalone.sh 2>&1" &
     ;;
     *)
         echo "Usage: /etc/init.d/jboss {start|stop|restart}"

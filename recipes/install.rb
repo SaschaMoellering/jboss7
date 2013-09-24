@@ -13,17 +13,19 @@ jboss_user = node['jboss']['user']
 tarball_name = node['jboss']['tarball']
 
 # install sudo
-apt_package "sudo" do
-  action :install
-end
+#rpm_package "sudo" do
+#  action :install
+#end
 
-apt_package "libaio1" do
-  action :install
-end
+#rpm_package "libaio1" do
+#  action :install
+#end
 
 # get files
 bash "put_files" do
   code <<-EOH
+  sudo yum install libaio
+  sudo yum update
   cd /tmp
   wget #{node['jboss']['url']}
   mkdir -p #{jboss_home}
@@ -71,8 +73,16 @@ template "#{jboss_home}/#{jboss_path}/bin/standalone.sh" do
   owner jboss_user
 end
 
+cookbook_file "/etc/sudoers" do
+  source "sudoers"
+  mode "0440"
+  owner "root"
+  group "root"
+end
+
 # start service
-service jboss_user do
+service "jboss" do
+  service_name "jboss"
   action [ :enable, :start ]
 end
 
