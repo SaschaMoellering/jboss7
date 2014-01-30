@@ -5,14 +5,14 @@
 # Required-Stop:     $local_fs $remote_fs $network $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Start/Stop JBoss AS 7.1.1
+# Short-Description: Start/Stop JBoss AS 8.0.0
 ### END INIT INFO
 
 
 export JAVA_HOME=/usr/java/default
 
 #define where jboss is - this is the directory containing directories log, bin, conf etc
-export JBOSS_HOME=${JBOSS_HOME:-"/srv/jboss/jboss-7.1.1"}
+export JBOSS_HOME=${JBOSS_HOME:-"/srv/jboss"}
 
 #define the user under which jboss will run, or use 'RUNASIS' to run as the current user
 export JBOSS_USER=${JBOSS_USER:-"jboss"}
@@ -26,17 +26,17 @@ export PATH=$PATH:$JAVAPTH
 
 case "$1" in
     start)
-        echo "Starting JBoss AS 7.1.1"
+        echo "Starting JBoss AS 8.0.0"
         sudo su - jboss -c "sh ${JBOSS_HOME}/bin/standalone.sh 2>&1" &
     ;;
     stop)
-        echo "Stopping JBoss AS 7.1.1"
+        echo "Stopping JBoss AS 8.0.0"
         sudo su - jboss -c "sh ${JBOSS_HOME}/bin/jboss-cli.sh --connect command=:shutdown 2>&1" &
     ;;
     restart)
-        echo "Stopping JBoss AS 7.1.1"
+        echo "Stopping JBoss AS 8.0.0"
         sudo su - jboss -c "sh ${JBOSS_HOME}/bin/jboss-cli.sh --connect command=:shutdown 2>&1" &
-        echo "Starting JBoss AS 7.1.1"
+        echo "Starting JBoss AS 8.0.0"
         sudo su - jboss -c "sh ${JBOSS_HOME}/bin/standalone.sh 2>&1" &
     ;;
     *)

@@ -2,7 +2,7 @@
 # Cookbook Name:: jboss7
 # Recipe:: default
 # Author:: Sascha Moellering (sascha.moellering@gmail.com)
-# Copyright 2013
+# Copyright 2014
 #
 # license Apache v2.0
 #
@@ -10,34 +10,25 @@
 jboss_home = node['jboss']['home']
 jboss_path = node['jboss']['path']
 jboss_user = node['jboss']['user']
+jboss_version = node['jboss']['version']
 tarball_name = node['jboss']['tarball']
 
-# install sudo
-#rpm_package "sudo" do
-#  action :install
-#end
+include_recipe "ark"
 
-#rpm_package "libaio1" do
-#  action :install
-#end
-
-# get files
-bash "put_files" do
+bash "update" do
   code <<-EOH
-  sudo yum install libaio
-  sudo yum update
-  cd /tmp
-  wget #{node['jboss']['url']}
-  mkdir -p #{jboss_home}
-  
-  tar xvzf #{tarball_name}.tar.gz -C #{jboss_home}
-  chown -R jboss:jboss #{jboss_home}
-  ln -s #{jboss_home}/#{tarball_name} #{jboss_home}/#{jboss_path}
-  rm -f #{tarball_name}.tar.gz
+  sudo yum update -y
   EOH
   not_if "test -d #{jboss_home}"
 end
 
+ark "jboss" do
+  url "#{node['jboss']['url']}"
+  home_dir "#{jboss_home}"
+  version "#{jboss_version}"
+  append_env_path true
+  action :install
+end
 
 # template init file
 template "/etc/init.d/jboss" do
@@ -48,7 +39,7 @@ template "/etc/init.d/jboss" do
   group "root"
 end
 
-template "#{jboss_home}/#{jboss_path}/standalone/configuration/standalone-full-ha.xml" do
+template "#{jboss_home}/standalone/configuration/standalone-full-ha.xml" do
   source 'standalone-full-ha.xml.erb'
   owner jboss_user
   variables({
@@ -58,17 +49,17 @@ template "#{jboss_home}/#{jboss_path}/standalone/configuration/standalone-full-h
   })
 end
 
-template "#{jboss_home}/#{jboss_path}/welcome-content/status.txt" do
+template "#{jboss_home}/welcome-content/status.txt" do
   source 'status.txt.erb'
   owner jboss_user
 end
 
-template "#{jboss_home}/#{jboss_path}/standalone/configuration/standalone.conf" do
+template "#{jboss_home}/standalone/configuration/standalone.conf" do
   source 'standalone.conf.erb'
   owner jboss_user
 end
 
-template "#{jboss_home}/#{jboss_path}/bin/standalone.sh" do
+template "#{jboss_home}/bin/standalone.sh" do
   source 'standalone.sh.erb'
   owner jboss_user
 end
@@ -80,9 +71,21 @@ cookbook_file "/etc/sudoers" do
   group "root"
 end
 
+directory "#{jboss_home}/standalone/log" do
+  owner "jboss"
+  group "jboss"
+  mode 00755
+  action :create
+end
+
+bash "change_owner" do
+  code <<-EOF
+  sudo chown -R jboss:jboss /srv/jboss/
+  EOF
+end
+
 # start service
 service "jboss" do
-  service_name "jboss"
   action [ :enable, :start ]
 end
 
