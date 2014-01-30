@@ -78,10 +78,12 @@ directory "#{jboss_home}/standalone/log" do
   action :create
 end
 
-bash "change_owner" do
-  code <<-EOF
-  sudo chown -R jboss:jboss /srv/jboss/
-  EOF
+%w{ jboss }.each do |dir|
+  directory "/srv/#{dir}" do
+    owner "jboss"
+    group "jboss"
+    recursive true
+  end
 end
 
 # start service
