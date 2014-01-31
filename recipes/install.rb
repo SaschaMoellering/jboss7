@@ -78,12 +78,10 @@ directory "#{jboss_home}/standalone/log" do
   action :create
 end
 
-%w{ jboss }.each do |dir|
-  directory "/srv/#{dir}" do
-    owner "jboss"
-    group "jboss"
-    recursive true
-  end
+bash "owner" do
+  code <<-EOH
+  chown -R jboss:jboss /usr/local/jboss-8.0.0
+  EOH
 end
 
 # start service
