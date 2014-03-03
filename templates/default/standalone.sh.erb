@@ -232,7 +232,7 @@ if $cygwin; then
     JBOSS_CONFIG_DIR=`cygpath --path --windows "$JBOSS_CONFIG_DIR"`
 fi
 
-JAVA_OPTS="$JAVA_OPTS -Djboss.node.name=`hostname --ip-address`"
+JAVA_OPTS="$JAVA_OPTS -Djboss.node.name=`hostname -I`"
 # Display our environment
 echo "========================================================================="
 echo ""
