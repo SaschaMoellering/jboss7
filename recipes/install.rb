@@ -86,6 +86,7 @@ end
 
 # start service
 service "jboss" do
+  service_name "jboss"
   action [ :enable, :start ]
 end
 
