@@ -1,3 +1,4 @@
+name 'jboss7'
 maintainer       "Sascha Moellering"
 maintainer_email "sascha.moellering@gmail.com"
 license          "Apache v2.0"
