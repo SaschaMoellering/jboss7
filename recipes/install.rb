@@ -21,9 +21,9 @@ bash 'update' do
 end
 
 ark 'jboss' do
-  url "#{node['jboss']['url']}"
-  home_dir "#{jboss_home}"
-  version "#{jboss_version}"
+  url node['jboss']['url']
+  home_dir jboss_home
+  version jboss_version
   append_env_path true
   action :install
 end
@@ -41,9 +41,9 @@ template "#{jboss_home}/standalone/configuration/standalone-full-ha.xml" do
   source 'standalone-full-ha.xml.erb'
   owner jboss_user
   variables(
-              s3_access_key: node[:aws][:s3][:access_key],
-              s3_secret_access_key: node[:aws][:s3][:secret_access_key],
-              s3_bucket: node[:aws][:s3][:bucket]
+              s3_access_key:        node['aws']['s3']['access_key'],
+              s3_secret_access_key: node['aws']['s3']['secret_access_key'],
+              s3_bucket:            node['aws']['s3']['bucket']
   )
 end
 
