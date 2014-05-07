@@ -4,7 +4,7 @@ describe 'jboss7::default' do
   let(:chef_run) { ChefSpec::Runner.new.converge(described_recipe) }
 
   before do
-    stub_command("test -d /srv/jboss").and_return(false)
+    stub_command('test -d /srv/jboss').and_return(false)
   end
 
   it 'should execute the users recipe' do
