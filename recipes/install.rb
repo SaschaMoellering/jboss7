@@ -8,10 +8,8 @@
 #
 
 jboss_home = node['jboss']['home']
-jboss_path = node['jboss']['path']
 jboss_user = node['jboss']['user']
 jboss_version = node['jboss']['version']
-tarball_name = node['jboss']['tarball']
 
 include_recipe 'ark'
 
