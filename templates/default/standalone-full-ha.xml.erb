@@ -355,7 +355,7 @@
                 <transport type="TCP" socket-binding="jgroups-tcp"/>
                 <protocol type="TCPPING">
                     <property name="initial_hosts">
-                        <%= node[:fqdn] %>[7600]
+                        <%= node['fqdn'] %>[7600]
                     </property>
                     <property name="port_range">
                         0
@@ -597,7 +597,7 @@
         <interface name="unsecure">
             <!--
               ~  Used for IIOP sockets in the standard configuration.
-              ~                  To secure JacORB you need to setup SSL 
+              ~                  To secure JacORB you need to setup SSL
               -->
             <inet-address value="${jboss.bind.address.unsecure:127.0.0.1}"/>
         </interface>
