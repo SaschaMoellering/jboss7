@@ -82,8 +82,14 @@ bash 'owner' do
   EOH
 end
 
-# start service
+# enable service
 service 'jboss' do
   service_name 'jboss'
-  action [:enable, :start]
+  action :enable
+end
+
+# start service
+service "jboss" do
+    start_command 'service jboss start && sleep 15'
+    action :start
 end
